@@ -42,3 +42,6 @@ if __name__ == "__main__":
             perform_nmap_scan()
 
         print(Fore.RED + Style.BRIGHT + "Thank you for using the VIPER Toolkit!\n" + Style.RESET_ALL)
+        response = input(Fore.BLUE + Style.BRIGHT + "Do you want to continue? (y/n): " + Style.RESET_ALL)
+        if response.lower() != 'y':
+            break
