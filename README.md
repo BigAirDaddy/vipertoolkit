@@ -19,10 +19,12 @@ Welcome to the VIPER Toolkit! This toolkit provides various tools for network ex
 1. Clone the repository:
 
    
-   git clone https://github.com/yourusername/viper-toolkit.git
+   git clone https://github.com/BigAirDaddy/vipertoolkit.git
    cd viper-toolkit
-   pip install -r requirements.txt
-   python main.py
+2. Install requirements
+    pip install -r requirements.txt
+3. Run the Script
+    python main.py
 
 
    
