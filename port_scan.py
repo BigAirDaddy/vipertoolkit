@@ -14,21 +14,45 @@ def perform_nmap_scan():
     global stopped, update_spinner_thread  # Use the global variables 'stopped' and 'update_spinner_thread'
 
     ip = input(Fore.RED + Style.BRIGHT + 'Enter the IP address you would like to scan: \n' + Style.RESET_ALL)
-    scan_type = input(Fore.RED + Style.BRIGHT + 'Choose the Nmap scan type (quick, regular, or Aggressive): ' + Style.RESET_ALL)
-    
-    if scan_type == 'quick':
-        nmap_options = '-F'  # Fast scan with common ports
-    elif scan_type == 'regular':
-        nmap_options = ''  # Default Nmap options (regular scan)
-    elif scan_type == 'Aggressive':
-        nmap_options = '-T4'  # Aggressive fast scan
+
+    print(Fore.RED + Style.BRIGHT + 'Choose the Nmap scan type:\n ' + Style.RESET_ALL)
+    print(Fore.BLUE + Style.BRIGHT + '1. TCP SYN Scan (sS)\n')
+    print('2. TCP Connect Scan (sT)\n')
+    print('3. UDP Scan (sU)\n')
+    print('4. ACK Scan (sA)\n')
+    print('5. Window Scan (sW)\n')
+    print('6. Idle Scan (sI)\n')
+    print('7. XMAS Tree Scan (sX)\n')
+    print('8. NULL Scan (sN)\n')
+    print('9. Basic TCP Scan (sY)\n')
+
+    scan_type = input('Enter your choice number: ' + Style.RESET_ALL)
+
+    if scan_type == '1':
+        nmap_options = '-sS'  # TCP SYN Scan
+    elif scan_type == '2':
+        nmap_options = '-sT'  # TCP Connect Scan
+    elif scan_type == '3':
+        nmap_options = '-sU'  # UDP Scan
+    elif scan_type == '4':
+        nmap_options = '-sA'  # ACK Scan
+    elif scan_type == '5':
+        nmap_options = '-sW'  # Window Scan
+    elif scan_type == '6':
+        nmap_options = '-sI zombie'  # Idle Scan (requires a zombie system)
+    elif scan_type == '7':
+        nmap_options = '-sX'  # XMAS Tree Scan
+    elif scan_type == '8':
+        nmap_options = '-sN'  # NULL Scan
+    elif scan_type == '9':
+        nmap_options = '-sY'
     else:
         print("Invalid scan type. Using a regular scan.")
         nmap_options = ''  # Default Nmap options (regular scan)
 
-    answer = input('Would you like to scan a specific range of ports on this address? (y/n) ')
+    answer = input(Fore.RED + Style.BRIGHT + 'Would you like to scan a specific range of ports on this address? (y/n) ' + Style.RESET_ALL)
     if answer.lower() == 'y':
-        port = input('Enter the ports you would like to scan (or press Enter to scan all)\n')
+        port = input(Fore.RED + Style.BRIGHT + 'Enter the ports you would like to scan:\n' + Style.RESET_ALL)
         if not port:
             port = '0-65535'
         else:
@@ -40,7 +64,7 @@ def perform_nmap_scan():
     else:
         port = '0-65535'  # Default to scanning all ports
 
-    vuln_scan = input('Do you want to run vulnerability detection scripts? (y/n) ')
+    vuln_scan = input(Fore.RED + Style.BRIGHT + 'Do you want to run vulnerability detection scripts? (y/n) ' + Style.RESET_ALL)
     if vuln_scan.lower() == 'y':
         nmap_options += ' --script vuln'
         print(Fore.GREEN + Style.BRIGHT + 'Scanning for open ports and vulnerabilities\n' + Style.RESET_ALL)
@@ -92,10 +116,5 @@ def update_spinner():
             sys.stdout.write('\b')
             time.sleep(spinner_speed)
 
-# If you want to run the perform_nmap_scan directly from port_scan.py, you can add the following:
-# if __name__ == "__main__":
-#     perform_nmap_scan()
-
-            sys.stdout.write('\b')
-            time.sleep(spinner_speed)
-
+if __name__ == "__main__":
+    perform_nmap_scan()
