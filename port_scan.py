@@ -49,7 +49,7 @@ def perform_nmap_scan():
         scan_start_time = time.time()
         nm.scan(ip, port, arguments=nmap_options)
         stopped = True
-        spinner_thread.join()
+        update_spinner_thread.join()
         print(Fore.RED + Style.BRIGHT + "Scan results:" + Style.RESET_ALL)
 
         for host in nm.all_hosts():
@@ -85,3 +85,4 @@ def update_spinner():
             sys.stdout.flush()
             sys.stdout.write('\b')
             time.sleep(spinner_speed)
+
