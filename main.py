@@ -21,8 +21,8 @@ if __name__ == "__main__":
         if a == 'q':
             break  # Exit the program if the user enters 'q'
 
-        if a in ("1", "2", "3"):
-            ip = input(Fore.RED + Style.BRIGHT + 'Enter the IP address or phone number you would like to use: \n' + Style.RESET_ALL)
+        if a in ("2","3"):
+            ip = input(Fore.RED + Style.BRIGHT + 'Enter the IP address you would like to use: \n' + Style.RESET_ALL)
 
         if a == "4":
             phone_number = input(Fore.RED + Style.BRIGHT + 'Enter the phone number you would like to search without the country code:\n' + Style.RESET_ALL)
