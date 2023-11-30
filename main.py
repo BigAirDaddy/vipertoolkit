@@ -1,5 +1,5 @@
 from colorama import Fore, Style
-from port_scan import main as perform_nmap_scan
+from port_scan import perform_nmap_scan
 from ip_info import get_ip_info
 from shodan_search import shodan_search
 from phone_number import numverify_check
