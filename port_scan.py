@@ -15,15 +15,9 @@ def perform_nmap_scan(ip, port, nmap_options):
     try:
         nm = nmap.PortScanner()
         scan_start_time = time.time()
-
-        # Create and start the spinner thread
-        spinner_thread = threading.Thread(target=update_spinner)
-        spinner_thread.start()
-
         nm.scan(ip, port, arguments=nmap_options)
         stopped = True
-        spinner_thread.join()  # Wait for the spinner thread to finish
-
+        spinner_thread.join()
         print(Fore.RED + Style.BRIGHT + "Scan results:" + Style.RESET_ALL)
 
         for host in nm.all_hosts():
@@ -52,6 +46,8 @@ def perform_nmap_scan(ip, port, nmap_options):
         print(f"Error occurred while scanning: {str(e)}")
         print("Scan failed. Please check your input or Nmap configuration")
 
+# Call the port scanning function
+perform_nmap_scan(ip, port, nmap_options)
 def update_spinner():
     while not stopped:
         for char in spinner:
