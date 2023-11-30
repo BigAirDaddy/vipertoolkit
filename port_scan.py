@@ -9,8 +9,40 @@ spinner_speed = 0.1
 
 stopped = False  # Define the 'stopped' variable
 
-def perform_nmap_scan(ip, port, nmap_options):
+def perform_nmap_scan():
     global stopped  # Use the global variable 'stopped'
+
+    ip = input(Fore.RED + Style.BRIGHT + 'Enter the IP address you would like to scan: \n' + Style.RESET_ALL)
+    scan_type = input(Fore.RED + Style.BRIGHT + 'Choose the Nmap scan type (quick, regular, or Aggressive): ' + Style.RESET_ALL)
+    
+    if scan_type == 'quick':
+        nmap_options = '-F'  # Fast scan with common ports
+    elif scan_type == 'regular':
+        nmap_options = ''  # Default Nmap options (regular scan)
+    elif scan_type == 'Aggressive':
+        nmap_options = '-T4'  # Aggressive fast scan
+    else:
+        print("Invalid scan type. Using a regular scan.")
+        nmap_options = ''  # Default Nmap options (regular scan)
+
+    answer = input('Would you like to scan a specific range of ports on this address? (y/n) ')
+    if answer.lower() == 'y':
+        port = input('Enter the ports you would like to scan (or press Enter to scan all)\n')
+        if not port:
+            port = '0-65535'
+        else:
+            try:
+                int(port)
+            except ValueError:
+                print("Invalid input for port. Using default range.")
+                port = '0-65535'
+    else:
+        port = '0-65535'  # Default to scanning all ports
+
+    vuln_scan = input('Do you want to run vulnerability detection scripts? (y/n) ')
+    if vuln_scan.lower() == 'y':
+        nmap_options += ' --script vuln'
+        print(Fore.GREEN + Style.BRIGHT + 'Scanning for open ports and vulnerabilities\n' + Style.RESET_ALL)
 
     try:
         nm = nmap.PortScanner()
@@ -46,8 +78,6 @@ def perform_nmap_scan(ip, port, nmap_options):
         print(f"Error occurred while scanning: {str(e)}")
         print("Scan failed. Please check your input or Nmap configuration")
 
-# Call the port scanning function
-perform_nmap_scan(ip, port, nmap_options)
 def update_spinner():
     while not stopped:
         for char in spinner:
