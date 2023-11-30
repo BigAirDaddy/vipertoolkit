@@ -8,9 +8,10 @@ spinner = [Fore.BLUE + Style.BRIGHT + "|", "/", "-", "\\" + Style.RESET_ALL]
 spinner_speed = 0.1
 
 stopped = False  # Define the 'stopped' variable
+update_spinner_thread = None  # Declare the update_spinner_thread variable
 
 def perform_nmap_scan():
-    global stopped  # Use the global variable 'stopped'
+    global stopped, update_spinner_thread  # Use the global variables 'stopped' and 'update_spinner_thread'
 
     ip = input(Fore.RED + Style.BRIGHT + 'Enter the IP address you would like to scan: \n' + Style.RESET_ALL)
     scan_type = input(Fore.RED + Style.BRIGHT + 'Choose the Nmap scan type (quick, regular, or Aggressive): ' + Style.RESET_ALL)
@@ -47,6 +48,11 @@ def perform_nmap_scan():
     try:
         nm = nmap.PortScanner()
         scan_start_time = time.time()
+
+        # Start the spinner thread
+        update_spinner_thread = threading.Thread(target=update_spinner)
+        update_spinner_thread.start()
+
         nm.scan(ip, port, arguments=nmap_options)
         stopped = True
         update_spinner_thread.join()
@@ -83,6 +89,13 @@ def update_spinner():
         for char in spinner:
             sys.stdout.write(char)
             sys.stdout.flush()
+            sys.stdout.write('\b')
+            time.sleep(spinner_speed)
+
+# If you want to run the perform_nmap_scan directly from port_scan.py, you can add the following:
+# if __name__ == "__main__":
+#     perform_nmap_scan()
+
             sys.stdout.write('\b')
             time.sleep(spinner_speed)
 
