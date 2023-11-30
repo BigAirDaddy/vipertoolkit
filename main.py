@@ -38,7 +38,7 @@ if __name__ == "__main__":
             shodan_search(ip)
 
 
-          if a == '1':
+        if a == '1':
               # Port scanning inputs
               scan_type = input(Fore.RED + Style.BRIGHT + 'Choose the Nmap scan type (quick, regular, or Aggressive): ' + Style.RESET_ALL)
               if scan_type == 'quick':
